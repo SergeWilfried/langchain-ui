@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useSidebar } from "@/lib/sidebar";
 import PageHeader from "@/components/page-header";
+import { useAsync } from "react-use";
 
 export default function PluginsClientPage() {
     const menu = useSidebar();

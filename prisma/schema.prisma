@@ -20,6 +20,9 @@ model User {
   sessions       Session[]
   PromptTemplate PromptTemplate[]
   Chatbot        Chatbot[]
+  DataSource     DataSource[]
+  Tool           Tool[]
+  Plugin         Plugin[]
 }
 
 model Account {
@@ -90,3 +93,38 @@ model ChatbotMessage {
   message   String   @db.VarChar()
   agent     String
 }
+
+
+model DataSource {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique
+  description   String   @db.VarChar()
+  userId            String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+}
+
+model Plugin {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique
+  description   String   @db.VarChar()
+  enabled    Boolean @default(false)
+  userId            String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Tool {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique
+  description   String   @db.VarChar()
+  enabled    Boolean @default(false)
+  userId            String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+

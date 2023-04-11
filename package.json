@@ -10,7 +10,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "next lint"
+    "test": "next lint",
+    "seed": "node prisma/seed.js",
+    "db:migrate-save": "prisma migrate dev",
+    "db:migrate-up": "prisma migrate deploy",
+    "db:clean": "node prisma/clean.js",
+    "db:init": "run-s db:migrate-up seed",
+    "prisma:generate": "prisma generate",
+    "docker:db": "docker-compose -f docker-compose.db.yml up -d"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.0.1",
@@ -20,6 +27,7 @@
     "@codemirror/lang-markdown": "^6.1.0",
     "@codemirror/language-data": "^6.2.0",
     "@dqbd/tiktoken": "^1.0.2",
+    "npm-run-all": "4.1.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@microsoft/fetch-event-source": "^2.0.1",

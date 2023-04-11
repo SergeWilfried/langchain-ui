@@ -29,7 +29,7 @@ Features:
 
 👉 Bring your own Auth provider (defaults to Github)
 
-👉 Usage quoutas
+👉 Usage quotas
 
 👉 Embed Chatbots to any site or application
 

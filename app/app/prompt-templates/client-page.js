@@ -34,6 +34,7 @@ import {
   getPromptVariables,
   removePromptTemplateById,
 } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 export default function PromptTemplatesClientPage() {
   const buttonColorScheme = useColorModeValue("blackAlpha", "whiteAlpha");
@@ -41,6 +42,7 @@ export default function PromptTemplatesClientPage() {
   const borderBottomColor = useColorModeValue("gray.50", "#333");
   const menu = useSidebar();
   const [promptTemplates, setPromptTemplates] = useState([]);
+  const t = useTranslations("PromptTemplates");
 
   const { loading: isLoading } = useAsync(async () => {
     const { data } = await getPrompTemplates();

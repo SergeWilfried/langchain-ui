@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation";
 import { Box, Button, Icon, Stack, useColorMode } from "@chakra-ui/react";
 import { useSidebar } from "@/lib/sidebar";
 import UserMenu from "@/components/user-menu";
+import { useTranslations } from "next-intl";
 
 function SidebarItem({ id, href, label, icon, ...properties }) {
   const router = useRouter();
+  const t = useTranslations("SideBar");
 
   return (
     <Button

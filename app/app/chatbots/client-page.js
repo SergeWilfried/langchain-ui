@@ -33,6 +33,7 @@ import {
   getPrompTemplates,
   removeChatbotById,
 } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 export default function ChatbotsClientPage() {
   const [showForm, setShowForm] = useState();
@@ -43,6 +44,7 @@ export default function ChatbotsClientPage() {
   const borderBottomColor = useColorModeValue("gray.50", "#333");
   const router = useRouter();
   const menu = useSidebar();
+  const t = useTranslations("ChatBots");
 
   const {
     formState: { errors, isSubmitting },

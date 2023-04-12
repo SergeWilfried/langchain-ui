@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = require("@prisma/client");
 if (require.main === module) {
-
   seed().catch((error) => {
     console.error(error);
     process.exit(1);
@@ -14,20 +13,13 @@ async function seed() {
   const client = new prisma.PrismaClient();
   console.info("Seeding database with defaults plugins...");
 
-  const plugins = {
-   
-  };
+  const plugins = {};
 
   console.info("Seeding database with defaults datastores...");
 
+  const datastores = {};
 
-  const datastores = {
-   
-  }
-
-  const data = {
-   
-  }
+  const data = {};
 
   await client.user.upsert({
     where: {

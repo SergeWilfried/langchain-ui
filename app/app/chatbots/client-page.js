@@ -9,19 +9,30 @@ import {
   FormControl,
   HStack,
   Icon,
-  IconButton,
+  Switch,
   Input,
   Select,
+  Badge,
+  CardFooter,
   Spinner,
   Stack,
-  Table,
-  TableContainer,
+  Card,
+  FormLabel,
+  SimpleGrid,
+  CardBody,
   Tbody,
+  CardHeader,
   Text,
+  Avatar,
+  Box,
+  Flex,
+  ArrowForwardIcon,
   Tr,
   Td,
   useColorModeValue,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { bots } from "../utils";
 import { TbPlus, TbTrashX } from "react-icons/tb";
 import { useAsync } from "react-use";
 import { useForm } from "react-hook-form";
@@ -61,6 +72,20 @@ export default function ChatbotsClientPage() {
 
     return;
   }, [getChatbots, getPrompTemplates, setChatbots]);
+
+  const toolsTemplates = [
+    { id: 0, name: "None", enabled: true },
+    { id: 1, name: "Bing Search", enabled: false },
+    { id: 2, name: "Google Search", enabled: true },
+  ].filter(({ enabled }) => enabled === true);
+
+  const datasourceTemplates = [
+    { id: 0, name: "None", enabled: true },
+    { id: 1, name: "Excel Sheet", enabled: true },
+    { id: 2, name: "PDF File", enabled: true },
+    { id: 2, name: "SQL", enabled: false },
+    { id: 2, name: "Google Drive", enabled: true },
+  ].filter(({ enabled }) => enabled === true);
 
   const handleRemoveChatbot = useCallback(async (chatbotId) => {
     await removeChatbotById(chatbotId);
@@ -107,31 +132,42 @@ export default function ChatbotsClientPage() {
         </Center>
       )}
       {!isLoading && !showForm && (
-        <TableContainer>
-          <Table size="sm">
-            <Tbody>
-              {chatbots.map(({ id, name }) => (
-                <Tr key={id}>
-                  <Td
-                    cursor="pointer"
-                    _hover={{ opacity: 0.5 }}
-                    borderBottomColor={borderBottomColor}
-                  >
-                    <Link href={`/app/chatbots/${id}`}>{name}</Link>
-                  </Td>
-                  <Td textAlign="right" borderBottomColor={borderBottomColor}>
-                    <IconButton
-                      size="sm"
-                      icon={<Icon as={TbTrashX} fontSize="lg" />}
-                      variant="ghost"
-                      onClick={() => handleRemoveChatbot(id)}
-                    />
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+        <SimpleGrid
+          spacing={4}
+          templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+        >
+          {bots.map(({ id, name, description, link, access }) => (
+            <Card>
+              <CardHeader>
+                <Flex>
+                  <Avatar src="https://bit.ly/sage-adebayo" />
+                  <Box ml="3">
+                    <Text fontWeight="bold">{name}</Text>
+                    {/* display red badge if access is paid */}
+                    {access === "premium" && (
+                      <Badge ml="1" colorScheme="red">
+                        {access}
+                      </Badge>
+                    )}
+                    {access === "free" && (
+                      <Badge ml="1" colorScheme="green">
+                        {access}
+                      </Badge>
+                    )}
+                  </Box>
+                </Flex>
+              </CardHeader>
+              <CardBody>
+                <Text fontSize="sm">{description}</Text>
+              </CardBody>
+              <CardFooter>
+                <NextLink href={`/app/chatbots/${id}`} passHref>
+                  <Button variant="outline">Configure</Button>
+                </NextLink>
+              </CardFooter>
+            </Card>
+          ))}
+        </SimpleGrid>
       )}
       {showForm && (
         <Center flex={1}>
@@ -162,6 +198,32 @@ export default function ChatbotsClientPage() {
                     placeholder="Select prompt template"
                   >
                     {promptTemplates.map(({ id, name }) => (
+                      <option key={id} value={id}>
+                        {name}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <Select
+                    size="sm"
+                    {...register("toolId")}
+                    placeholder="Add tools"
+                  >
+                    {toolsTemplates.map(({ id, name }) => (
+                      <option key={id} value={id}>
+                        {name}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <Select
+                    size="sm"
+                    {...register("datasourceId")}
+                    placeholder="Add a datasource"
+                  >
+                    {datasourceTemplates.map(({ id, name }) => (
                       <option key={id} value={id}>
                         {name}
                       </option>

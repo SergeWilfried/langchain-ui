@@ -10,6 +10,7 @@ import {
   HStack,
   Icon,
   IconButton,
+  TableCaption,
   Input,
   Spinner,
   Stack,
@@ -18,6 +19,8 @@ import {
   Tag,
   Tbody,
   Textarea,
+  Thead,
+  Th,
   Text,
   Tr,
   Td,
@@ -112,7 +115,16 @@ export default function PromptTemplatesClientPage() {
       )}
       {!isLoading && !showForm && (
         <TableContainer>
-          <Table size="sm">
+          <Table variant="simple" size="sm">
+            <TableCaption>Imperial to metric conversion factors</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Prompt</Th>
+                <Th>Description</Th>
+                <Th isNumeric>Created</Th>
+              </Tr>
+            </Thead>
             <Tbody>
               {promptTemplates.map(({ id, name }) => (
                 <Tr key={id}>
@@ -123,14 +135,9 @@ export default function PromptTemplatesClientPage() {
                   >
                     {name}
                   </Td>
-                  <Td textAlign="right" borderBottomColor={borderBottomColor}>
-                    <IconButton
-                      size="sm"
-                      icon={<Icon as={TbTrashX} fontSize="lg" />}
-                      variant="ghost"
-                      onClick={() => handleRemovePromptTemplate(id)}
-                    />
-                  </Td>
+                  <Td borderBottomColor={borderBottomColor}>Prompt</Td>
+                  <Td borderBottomColor={borderBottomColor}>Description</Td>
+                  <Td borderBottomColor={borderBottomColor}>Fri 15 Jan 2021</Td>
                 </Tr>
               ))}
             </Tbody>

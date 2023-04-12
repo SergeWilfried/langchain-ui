@@ -5,7 +5,7 @@ import { useSidebar } from "@/lib/sidebar";
 import PageHeader from "@/components/page-header";
 import { useAsync } from "react-use";
 
-export default function PluginsClientPage() {
+export default function SettingsClientPage() {
   const menu = useSidebar();
 
   const { loading: isLoading } = useAsync(async () => {
@@ -14,8 +14,8 @@ export default function PluginsClientPage() {
   return (
     <Stack flex={1} paddingX={4} paddingY={4} spacing={4}>
       <PageHeader
-        icon={menu.find(({ id }) => id === "plugins").icon}
-        title="Plugins"
+        icon={menu.find(({ id }) => id === "settings").icon}
+        title="Settings"
       ></PageHeader>
       {isLoading && (
         <Center flex={1}>

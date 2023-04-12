@@ -22,10 +22,7 @@ async function clean() {
   await prisma.$disconnect();
 }
 
-async function dropTables(
-  prisma,
-  tables
-){
+async function dropTables(prisma, tables) {
   for (const table of tables) {
     await prisma.$executeRawUnsafe(`DROP TABLE public."${table}" CASCADE;`);
   }
